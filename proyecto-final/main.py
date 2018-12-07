@@ -20,7 +20,7 @@ g_files = glob.glob(data_path)
 files = g_files + G_files
 
 # Parameters for image size and noise:
-width_objective = 10
+width_objective = 1
 noise_percentage = .05
 
 # Loop over all images to resize and binarize:
@@ -47,7 +47,4 @@ for image_name in files:
     noisy_image_name = image_name.replace(folder_name, noise_folder_name)
     cv2.imwrite(noisy_image_name, noisy_image)
     G = create_graph(noisy_image)
-    pos = dict( (n, n) for n in G.nodes() )
-    nx.draw(G, pos, node_size = 10)
-    plt.show()
     import pdb;pdb.set_trace()
