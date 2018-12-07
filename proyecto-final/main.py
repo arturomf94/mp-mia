@@ -1,5 +1,8 @@
 from __future__ import division
 from noise import sp_noise
+from graph import create_graph
+import matplotlib.pyplot as plt
+import networkx as nx
 import numpy as np
 import random
 import cv2
@@ -17,7 +20,7 @@ g_files = glob.glob(data_path)
 files = g_files + G_files
 
 # Parameters for image size and noise:
-width_objective = 100
+width_objective = 10
 noise_percentage = .05
 
 # Loop over all images to resize and binarize:
@@ -43,3 +46,8 @@ for image_name in files:
     # Save noisy image
     noisy_image_name = image_name.replace(folder_name, noise_folder_name)
     cv2.imwrite(noisy_image_name, noisy_image)
+    G = create_graph(noisy_image)
+    pos = dict( (n, n) for n in G.nodes() )
+    nx.draw(G, pos, node_size = 10)
+    plt.show()
+    import pdb;pdb.set_trace()
