@@ -1,6 +1,6 @@
 from __future__ import division
 from noise import sp_noise
-from graph import create_graph
+from graph import create_graph, add_costs
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
@@ -20,8 +20,11 @@ g_files = glob.glob(data_path)
 files = g_files + G_files
 
 # Parameters for image size and noise:
-width_objective = 1
+width_objective = 2
 noise_percentage = .05
+pairwise_cost = .1
+unary_cost_source = 1
+unary_cost_sink = 1
 
 # Loop over all images to resize and binarize:
 for image_name in files:
@@ -47,4 +50,5 @@ for image_name in files:
     noisy_image_name = image_name.replace(folder_name, noise_folder_name)
     cv2.imwrite(noisy_image_name, noisy_image)
     G = create_graph(noisy_image)
+    add_costs(G, unary_cost_source, unary_cost_sink, pairwise_cost)
     import pdb;pdb.set_trace()
