@@ -51,4 +51,6 @@ for image_name in files:
     cv2.imwrite(noisy_image_name, noisy_image)
     G = create_graph(noisy_image)
     add_costs(G, unary_cost_source, unary_cost_sink, pairwise_cost)
+    # Max Flow
+    flow_value, flow_dict = nx.maximum_flow(G, 0, 1)
     import pdb;pdb.set_trace()
