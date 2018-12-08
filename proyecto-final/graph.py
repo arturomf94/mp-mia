@@ -33,21 +33,28 @@ def add_costs(G, unary_matching_cost_source,
     edges = [edge for edge in G.edges()]
     for edge in edges:
         if isinstance(edge[0], tuple) and isinstance(edge[1], tuple):
-            if G.node[edge[0]]['value'] == G.node[edge[0]]['value']:
+            if G.node[edge[0]]['value'] == G.node[edge[1]]['value']:
                 G[edge[0]][edge[1]]['capacity'] = 0
             else:
                 G[edge[0]][edge[1]]['capacity'] = pairwise_cost
         elif isinstance(edge[0], tuple) and not isinstance(edge[1], tuple):
-            if G.node[edge[0]]['value'] == G.node[edge[0]]['value']:
+            if G.node[edge[0]]['value'] == G.node[edge[1]]['value']:
                 G[edge[0]][edge[1]]['capacity'] = unary_matching_cost_sink
             else:
                 G[edge[0]][edge[1]]['capacity'] = unary_nonmatching_cost_sink
         else:
-            if G.node[edge[0]]['value'] == G.node[edge[0]]['value']:
+            if G.node[edge[0]]['value'] == G.node[edge[1]]['value']:
                 G[edge[0]][edge[1]]['capacity'] = unary_matching_cost_source
             else:
                 G[edge[0]][edge[1]]['capacity'] = unary_nonmatching_cost_source
 
-# def recover_image(image, partition):
-#     clean_image = image
-#     if 0 in partition[0]:
+def recover_image(image, partition):
+    clean_image = image
+    if 1 in partition[0]:
+        for element in partition[0]:
+            if isinstance(element, tuple):
+                clean_image[element[0]][element[1]] = 0
+        for element in partition[1]:
+            if isinstance(element, tuple):
+                clean_image[element[0]][element[1]] = 255
+    return clean_image

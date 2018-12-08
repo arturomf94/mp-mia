@@ -1,6 +1,6 @@
 from __future__ import division
 from noise import sp_noise
-from graph import create_graph, add_costs
+from graph import create_graph, add_costs, recover_image
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
@@ -13,6 +13,7 @@ import glob
 folder_name = "./original_images/"
 binary_folder_name = "./binary_images/"
 noise_folder_name = "./noisy_images/"
+clean_folder_name = "./clean_images/"
 data_path = os.path.join(folder_name,'*G')
 G_files = glob.glob(data_path)
 data_path = os.path.join(folder_name,'*g')
@@ -20,13 +21,13 @@ g_files = glob.glob(data_path)
 files = g_files + G_files
 
 # Parameters for image size and noise:
-width_objective = 2
-noise_percentage = .05
+width_objective = 100
+noise_percentage = .01
 pairwise_cost = 1
 unary_matching_cost_source = .9
 unary_matching_cost_sink = .9
-unary_nonmatching_cost_source = .1
-unary_nonmatching_cost_sink = .1
+unary_nonmatching_cost_source = 1
+unary_nonmatching_cost_sink = 1
 
 # Loop over all images to resize and binarize:
 for image_name in files:
@@ -60,4 +61,7 @@ for image_name in files:
     # Max Flow
     flow_value, flow_dict = nx.maximum_flow(G, 1, 0)
     cut_value, partition = nx.minimum_cut(G,1, 0)
-    import pdb;pdb.set_trace()
+    # Denoise image
+    clean_image = recover_image(noisy_image, partition)
+    clean_image_name = image_name.replace(folder_name, clean_folder_name)
+    cv2.imwrite(clean_image_name, clean_image)
