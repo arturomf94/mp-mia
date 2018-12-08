@@ -58,6 +58,6 @@ for image_name in files:
                 unary_nonmatching_cost_sink,
                 pairwise_cost)
     # Max Flow
-    flow_value, flow_dict = nx.maximum_flow(G, 0, 1)
-    cut_value, partition = nx.minimum_cut(G, 0, 1)
+    flow_value, flow_dict = nx.maximum_flow(G, 1, 0)
+    cut_value, partition = nx.minimum_cut(G,1, 0)
     import pdb;pdb.set_trace()

@@ -6,8 +6,8 @@ def create_graph(image):
     G = nx.grid_2d_graph(height, width)
     G = G.to_directed()
     # Add source and sink
-    G.add_node(0)
-    G.add_node(1)
+    G.add_node(0) # Sink
+    G.add_node(1) # Source
     nodes = [node for node in G.nodes()]
     # Add edges for source and sink and attributes
     for node in nodes:
@@ -16,8 +16,8 @@ def create_graph(image):
                 G.node[node].update({'value': 0})
             else:
                 G.node[node].update({'value': 1})
-            G.add_edge(0, node, capacity = 0)
-            G.add_edge(node, 1, capacity = 0)
+            G.add_edge(node, 0, capacity = 0)
+            G.add_edge(1, node, capacity = 0)
         else:
             if node == 0:
                 G.node[node].update({'value': 0})
@@ -47,3 +47,7 @@ def add_costs(G, unary_matching_cost_source,
                 G[edge[0]][edge[1]]['capacity'] = unary_matching_cost_source
             else:
                 G[edge[0]][edge[1]]['capacity'] = unary_nonmatching_cost_source
+
+# def recover_image(image, partition):
+#     clean_image = image
+#     if 0 in partition[0]:
