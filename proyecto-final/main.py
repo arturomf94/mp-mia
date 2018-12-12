@@ -21,8 +21,8 @@ g_files = glob.glob(data_path)
 files = g_files + G_files
 
 # Parameters for image size and noise:
-width_objective = 100
-noise_percentage = .01
+width_objective = 150
+noise_percentage = .1
 pairwise_cost = 1
 unary_matching_cost_source = .9
 unary_matching_cost_sink = .9
